@@ -22,7 +22,7 @@
                 <input type="text" class="form-control" id="series" name="series" min="1" max="20" required>
             </div>
             <div class="mb-3">
-                <label for="sale_date" class="form-label">Serie*</label>
+                <label for="sale_date" class="form-label">Data di uscita</label>
                 <input type="date" class="form-control" id="sale_date" name="sale_date"  required>
             </div>
             <div class="mb-3">
