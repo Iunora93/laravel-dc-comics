@@ -41,12 +41,7 @@ class ComicController extends Controller
         // creo l'oggetto model
         $new_comic = new Comic();
         // compilo l'oggetto (o meglio le sue proprietà)
-        $new_comic->title = $data['title'];
-        $new_comic->type = $data['type'];
-        $new_comic->series = $data['series'];
-        $new_comic->price = $data['price'];
-        $new_comic->description = $data['description'];
-        // salvo (creo a db la riga)
+        $new_comic->fill($data);
         $new_comic->save();
 
         // rendirizzo l'utente alla pagina della pasta appena creata
@@ -71,9 +66,9 @@ class ComicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Comic $comic)
     {
-        //
+        return view('comics.edit', compact('comic'));
     }
 
     /**
@@ -83,9 +78,14 @@ class ComicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Comic $comic)
     {
-        //
+        //recupero tutti i dati del form
+        $data = $request->all();
+        //aggiorno la risorsa per intero
+        $comic->update($data);
+        //faccio un redirect alla pagina della risorsa aggiornta(show in questo caso)
+        return redirect()->route('comics.show', $comic->id);
     }
 
     /**
@@ -94,8 +94,10 @@ class ComicController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Comic $comic)
     {
-        //
+        $comic->delete();
+        return redirect()->route('comics.index');
+
     }
 }
